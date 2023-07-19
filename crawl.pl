@@ -23,10 +23,10 @@ $VERSION = '1.00';
 print CLIENTCRAP "loading crawl.pl $VERSION!";
 
 my $bot_name = "ghost_of_shmup";
-my $root_server = "slashnet";
-my $root_chan = "#cats";
+my $root_server = "lunarnet";
+my $root_chan = "#octolog";
 my $target_server = "slashnet";
-my @target_chan = qw(#dogs);
+my @target_chan = qw(#cats);
 my $db_location = "crawl.db";
 my $ts = Irssi::server_find_tag($target_server);
 my $rs = Irssi::server_find_tag($root_server);
