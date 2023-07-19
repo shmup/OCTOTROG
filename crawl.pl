@@ -22,7 +22,7 @@ $VERSION = '1.00';
 
 print CLIENTCRAP "loading crawl.pl $VERSION!";
 
-my $bot_name = "ghost_of_shmup";
+my $bot_name = "shmup";
 my $root_server = "lunarnet";
 my $root_chan = "#octolog";
 my $target_server = "slashnet";
@@ -397,26 +397,30 @@ sub private_msg {
     };
 }
 
-sub dispatch {
-    my ($server, $msg, $nick, $mask, $chan) = @_;
+sub pub_dispatch {
+    my ($server, $msg, $nick, $chan) = @_;
 
-    # if coming from target channel
     if (lc($chan) eq lc($target_chan[0])) {
         check_if_command($nick, trim($msg), $target_chan[0]);
     }
 
-    # root channel
     if (lc($chan) eq lc($root_chan)) {
-        # return unless the nick is in the keys
         return unless (grep {lc($_) eq lc($nick)} keys %commands);
-        # return unless the $player is found in the $text
         return unless (grep { lc($msg) =~ /\b\Q$_\E\b/i } split(" ", Irssi::settings_get_str("crawlwatchnicks")));
-        # return unless (grep {lc($msg) =~ lc($_)} split(/ +/, Irssi::settings_get_str("crawlwatchnicks")));
-        # send command if $text contains any @player names
         foreach (@target_chan) {
             public_msg($_, $msg)
         }
     }
+}
+
+sub own_public_dispatch {
+    my ($server, $msg, $target) = @_;
+    pub_dispatch($server, $msg, $server->{nick}, $target);
+}
+
+sub public_dispatch {
+    my ($server, $msg, $nick, $address, $target) = @_;
+    pub_dispatch($server, $msg, $nick, $target);
 }
 
 sub priv_dispatch {
@@ -429,7 +433,9 @@ sub priv_dispatch {
     }
 }
 
-Irssi::signal_add("message public", "dispatch");
+# https://raw.githubusercontent.com/irssi/irssi/master/docs/signals.txt
+Irssi::signal_add("message own_public", "own_public_dispatch");
+Irssi::signal_add("message public", "public_dispatch");
 Irssi::signal_add("message private", "priv_dispatch");
 Irssi::settings_add_str("crawlwatch", "crawlwatchnicks", "");
 
