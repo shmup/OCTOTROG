@@ -22,12 +22,12 @@ $VERSION = '1.00';
 
 print CLIENTCRAP "loading crawl.pl $VERSION!";
 
-my $bot_name = "OCTOTROG";
-my $root_server = "freenode";
-my $root_chan = "##crawl";
-my $target_server = "lunarnet";
-my @target_chan = qw(#octolog);
-my $db_location = "/home/octotrog/.irssi/scripts/crawl.db";
+my $bot_name = "ghost_of_shmup";
+my $root_server = "slashnet";
+my $root_chan = "#cats";
+my $target_server = "slashnet";
+my @target_chan = qw(#dogs);
+my $db_location = "/home/jtm/.irssi/scripts/crawl.db";
 my $ts = Irssi::server_find_tag($target_server);
 my $rs = Irssi::server_find_tag($root_server);
 
@@ -45,7 +45,9 @@ my %commands = (
                   '!rc','!rng','!seen','!send','!skill','!source','!tell','!time','!vault',
                   '!whereis','!wtf'],
     $bot_name => ['!watch', '!unwatch', '!watched', '!help', '!dbadd', '!dbremove', '?!', '!dblist', '$$'],
-    'Cheibriados' => ['%??']
+    'Cheibriados' => ['%??'],
+    'OCTOTROG' => [],
+    'shmup' => [],
     );
 
 sub db_connect {
@@ -437,4 +439,3 @@ $dbh->disconnect();
 
 print CLIENTCRAP "/set crawlwatchnicks ed edd eddy ...";
 print CLIENTCRAP "Watched nicks: " . Irssi::settings_get_str("crawlwatchnicks");
-
