@@ -27,7 +27,7 @@ my $root_server = "slashnet";
 my $root_chan = "#cats";
 my $target_server = "slashnet";
 my @target_chan = qw(#dogs);
-my $db_location = "/home/jtm/.irssi/scripts/crawl.db";
+my $db_location = "crawl.db";
 my $ts = Irssi::server_find_tag($target_server);
 my $rs = Irssi::server_find_tag($root_server);
 
